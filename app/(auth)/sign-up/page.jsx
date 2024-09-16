@@ -1,5 +1,7 @@
 "use client"
 import { useState, useEffect } from "react";
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +11,10 @@ const SignUp = () => {
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
+ 
 
 
   const handleChange = (e) => {
@@ -22,6 +28,18 @@ const SignUp = () => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
+
+    const res = await signIn('credentials', {
+      redirect: false,
+      username,
+      password,
+    });
+
+    if (res?.error) {
+      alert('Error signing in');
+    } else {
+      router.push('/'); // Redirect to homepage or dashboard
+    }
 
     try {
       const response = await fetch("/api/sign-up", {

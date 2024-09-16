@@ -1,75 +1,82 @@
-//Group room chat page
-"use client";
-import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { useEffect, useState } from 'react';
+import io from 'socket.io-client';
 
-export default function ChatRoom() {
-  const { data: session } = useSession();
+let socket;
+
+export default function Chat() {
+  const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
 
-  // Simulate loading messages from an API
   useEffect(() => {
-    // Fetch existing messages from your API or data source
-    const fetchMessages = async () => {
-      // Replace with your actual API endpoint
-      const response = await fetch("/api/chat/messages");
-      const data = await response.json();
-      setMessages(data);
-    };
+    // Connect to the Socket.io server
+    socket = io();
 
-    fetchMessages();
-  }, []);
-
-  const handleSendMessage = async (e) => {
-    e.preventDefault();
-
-    // Send the new message to your API or data source
-    const response = await fetch("/api/chat/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        content: newMessage,
-        sender: session.user.username,
-      }),
+    // Listen for incoming messages
+    socket.on('message', (msg) => {
+      setMessages((prevMessages) => [...prevMessages, msg]);
     });
 
-    if (response.ok) {
-      const savedMessage = await response.json();
-      setMessages((prevMessages) => [...prevMessages, savedMessage]);
-      setNewMessage("");
+    // Clean up on component unmount
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  // Send a message when the form is submitted
+  const sendMessage = (e) => {
+    e.preventDefault();
+
+    if (message.trim()) {
+      socket.emit('chatMessage', message); // Emit message to the server
+      setMessage(''); // Clear input after sending
     }
   };
 
   return (
-    <div>
-      <h1>Group Chat Room</h1>
-      <div
-        style={{
-          border: "1px solid #ccc",
-          padding: "1rem",
-          height: "400px",
-          overflowY: "scroll",
-        }}
-      >
-        {messages.map((msg, index) => (
-          <div key={index}>
-            <strong>{msg.sender}</strong>: {msg.content}
+    <>
+      <div className="flex flex-col h-screen">
+        {/* Header */}
+        <header className="bg-blue-600 p-4 flex justify-between items-center text-white">
+          <h1 className="text-3xl">
+            <i className="fas fa-smile"></i> ChatCord
+          </h1>
+          <a href="/" className="bg-red-600 px-4 py-2 rounded text-white hover:bg-red-700">
+            Leave Room
+          </a>
+        </header>
+
+        {/* Main Chat Section */}
+        <main className="flex flex-1">
+          <div className="w-2/3 p-4 bg-white overflow-y-auto">
+            {messages.map((msg, idx) => (
+              <div key={idx} className="message mb-4">
+                <p className="text">{msg}</p>
+              </div>
+            ))}
           </div>
-        ))}
+        </main>
+
+        {/* Message Form */}
+        <div className="p-4 bg-gray-100 border-t border-gray-300">
+          <form onSubmit={sendMessage} className="flex">
+            <input
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Enter Message"
+              className="flex-grow p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
+              required
+              autoComplete="off"
+            />
+            <button
+              type="submit"
+              className="ml-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center"
+            >
+              <i className="fas fa-paper-plane mr-2"></i> Send
+            </button>
+          </form>
+        </div>
       </div>
-      <form onSubmit={handleSendMessage}>
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type your message..."
-          required
-        />
-        <button type="submit">Send</button>
-      </form>
-    </div>
+    </>
   );
 }

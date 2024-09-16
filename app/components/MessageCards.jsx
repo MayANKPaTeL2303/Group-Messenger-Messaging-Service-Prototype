@@ -4,10 +4,10 @@ const MessageCard = ({ sender, content, timestamp }) => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4 mb-4">
       <div className="flex justify-between items-center">
-        <span className="font-semibold text-gray-800">{sender}</span>
-        <span className="text-sm text-gray-500">{new Date(timestamp).toLocaleTimeString()}</span>
+        <span className="font-semibold text-black !important">{sender}</span>
+        <span className="text-sm text-black !important">{new Date(timestamp).toLocaleTimeString()}</span>
+      <p className="mt-2 text-black !important">{content}</p>
       </div>
-      <p className="mt-2 text-gray-700">{content}</p>
     </div>
   );
 };

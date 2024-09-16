@@ -6,7 +6,7 @@ export { default } from 'next-auth/middleware';
 
 // Define the routes that this middleware will apply to
 export const config = {
-  matcher: ['/dashboard/:path*', '/login', '/sign-up', '/', '/verify/:path*'],
+  matcher: ['/:path*', '/login', '/sign-up', '/'],
 };
 
 // Middleware function to handle authentication checks
@@ -23,13 +23,13 @@ export async function middleware(request) {
       url.pathname.startsWith('/sign-up') ||
       url.pathname === '/')
   ) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
   // If not authenticated and trying to access the dashboard, redirect to sign-in
-  if (!token && url.pathname.startsWith('/dashboard')) {
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
+  // if (!token && url.pathname.startsWith('/')) {
+  //   return NextResponse.redirect(new URL('/login', request.url));
+  // }
 
   // If none of the conditions match, proceed to the requested page
   return NextResponse.next();

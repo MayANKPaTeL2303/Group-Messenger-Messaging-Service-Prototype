@@ -3,6 +3,7 @@ import CreateCard from "./components/CreateCard";
 import JoinCard from "./components/JoinCard";
 import Link from "next/link";
 import Box from "./components/Box"
+import Footer from "./components/Footer"
 
 export default function Home() {
   return (
@@ -12,6 +13,8 @@ export default function Home() {
         {/* <CreateCard />
         <JoinCard title="Join Group" select="Join" /> */}
       </div>
+
+      <Footer/>
     </div>
   );
 }

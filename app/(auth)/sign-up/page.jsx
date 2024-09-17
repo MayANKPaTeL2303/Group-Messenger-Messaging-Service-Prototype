@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { useState, useEffect } from "react";
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -29,13 +29,13 @@ const SignUp = () => {
     setError(null);
     setSuccess(null);
 
-    const res = await signIn('credentials', {
+    const response = await signIn('credentials', {
       redirect: false,
-      username,
-      password,
+      username: formData.username,
+      password: formData.password,
     });
 
-    if (res?.error) {
+    if (response?.error) {
       alert('Error signing in');
     } else {
       router.push('/'); // Redirect to homepage or dashboard

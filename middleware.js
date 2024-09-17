@@ -6,7 +6,7 @@ export { default } from 'next-auth/middleware';
 
 // Define the routes that this middleware will apply to
 export const config = {
-  matcher: ['/:path*', '/login', '/sign-up', '/'],
+  matcher: ['/:path*', '/login', '/sign-up'],
 };
 
 // Middleware function to handle authentication checks
@@ -15,19 +15,13 @@ export async function middleware(request) {
   const token = await getToken({ req: request });
   const url = request.nextUrl;
 
-  // Check if the user is authenticated
-  // Redirect to dashboard if authenticated and trying to access sign-in, sign-up, or home page
-  if (
-    token &&
-    (url.pathname.startsWith('/login') ||
-      url.pathname.startsWith('/sign-up') ||
-      url.pathname === '/')
-  ) {
-    return NextResponse.redirect(new URL('/', request.url));
+  // If the user is authenticated and trying to access the login or sign-up page, redirect to dashboard
+  if (token && (url.pathname.startsWith('/login') || url.pathname.startsWith('/sign-up'))) {
+    return NextResponse.redirect(new URL('/', request.url)); // Redirect to dashboard instead of home
   }
 
-  // If not authenticated and trying to access the dashboard, redirect to sign-in
-  // if (!token && url.pathname.startsWith('/')) {
+  // If not authenticated and trying to access a protected route, redirect to login
+  // if (!token && url.pathname.startsWith('/')) { // Adjust the path to your protected routes
   //   return NextResponse.redirect(new URL('/login', request.url));
   // }
 

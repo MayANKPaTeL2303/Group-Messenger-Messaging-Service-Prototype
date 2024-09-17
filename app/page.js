@@ -1,20 +1,20 @@
 //Dashboard page
 import CreateCard from "./components/CreateCard";
 import JoinCard from "./components/JoinCard";
-import Link from "next/link";
 import Box from "./components/Box"
-import Footer from "./components/Footer"
+import Block from "./components/Block";
 
 export default function Home() {
   return (
     <div>
       <div className="flex flex-row p-40 space-x-10">
+        <Block/>
         <Box/>
         {/* <CreateCard />
         <JoinCard title="Join Group" select="Join" /> */}
       </div>
 
-      <Footer/>
+     
     </div>
   );
 }

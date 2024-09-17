@@ -1,8 +1,11 @@
 "use client";
-import { useState } from "react";
-import {useRouter} from 'next/router'
+import { useState,useEffect } from "react";
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 const SignIn = () => {
+  const router = useRouter();
+  
   const [formData, setFormData] = useState({ identifier: "", password: "" });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -17,19 +20,14 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    setLoading(true);
+    
     setSuccess(null);
 
     try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData), // Send form data as JSON
-      });
-
-      const data = await response.json();
+      setLoading(true);
+      const response = await axios.post('api/login',formData)
+      console.log('Login successful', response.data);
+      router.push('/');
 
       if (!response.ok) {
         setError(data.message || "Login failed!");
@@ -60,7 +58,7 @@ const SignIn = () => {
               type="text"
               name="identifier"
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
+              className="w-full text-black p-2 border rounded-lg"
               required
             />
           </div>
@@ -71,7 +69,7 @@ const SignIn = () => {
               type="password"
               name="password"
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 text-black border rounded-lg"
               required
             />
           </div>

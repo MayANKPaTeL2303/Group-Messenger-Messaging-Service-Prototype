@@ -1,11 +1,24 @@
 import UserModel from "@model/User";
 import dbConnect from '@utils/dbConnect'
+import GroupModel from '@model/Group'
 import MessageModel from '@model/Message'
+import { Server } from 'socket.io';
+
+// Create a Socket.IO server instance if it doesn't already exist
+const initSocket = (server) => {
+  if (!io) {
+      io = new Server(server);
+  }
+};
 
 export async function POST(req)          //Use POST request for sending thr message
 {
     await dbConnect();
+    initSocket(req.socket.server);    // Initialize Socket.IO with the Next.js server
+
+    // const {message} = await request.json();
     const {username,content} = await request.json();   //get username and content and fetch it
+
     try{
         const user = await UserModel.findOne({username})
         if(!user)

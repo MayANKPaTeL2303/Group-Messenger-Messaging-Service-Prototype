@@ -4,6 +4,8 @@ import bcrypt from 'bcryptjs';
 import dbConnect from '../../../../utils/dbConnect';
 import UserModel from '../../../../model/User';
 
+//Added the token of group code with the session
+
 // NextAuth options configuration
 export const authOptions = {
   // Define authentication providers
@@ -52,16 +54,16 @@ export const authOptions = {
     async jwt({ token, user }) {
       if (user) {
         token._id = user._id?.toString();
-        token.status = user.status;
         token.username = user.username;
+        token.groupCode = user.groupCode
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
         session.user._id = token._id;
-        session.user.status = token.status;
         session.user.username = token.username;
+        session.groupCode = token.groupCode;
       }
       return session;
     },

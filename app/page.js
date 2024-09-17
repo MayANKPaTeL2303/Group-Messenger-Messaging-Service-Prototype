@@ -13,8 +13,6 @@ export default function Home() {
         {/* <CreateCard />
         <JoinCard title="Join Group" select="Join" /> */}
       </div>
-
-     
     </div>
   );
 }

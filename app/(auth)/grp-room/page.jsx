@@ -1,3 +1,65 @@
+'use client'
+import { useState } from 'react';
+
+const GroupChatRoom = () => {
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([
+    { id: 1, text: 'Hey everyone!', sender: 'Alice', timestamp: '10:30 AM' },
+    { id: 2, text: 'Hello Alice!', sender: 'Bob', timestamp: '10:32 AM' },
+  ]);
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (message.trim()) {
+      setMessages([...messages, { id: Date.now(), text: message, sender: 'You', timestamp: new Date().toLocaleTimeString() }]);
+      setMessage('');
+    }
+  };
+
+  return (
+    <div className="flex flex-col h-screen bg-gray-100">
+      {/* Header */}
+      <header className="bg-blue-600 p-4 text-white text-lg font-semibold flex justify-between items-center">
+        <div>Group Chat Room</div>
+      </header>
+
+      {/* Chat Area */}
+      <div className="flex-grow overflow-y-auto p-4 space-y-4">
+        {messages.map((msg) => (
+          <div key={msg.id} className={`flex ${msg.sender === 'You' ? 'justify-end' : 'justify-start'}`}>
+            <div className={`max-w-xs p-3 rounded-lg shadow-lg ${msg.sender === 'You' ? 'bg-blue-500 text-white' : 'bg-gray-300'}`}>
+              <p className="font-semibold">{msg.sender}</p>
+              <p>{msg.text}</p>
+              <span className="text-xs text-blue-150">{msg.timestamp}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Input Area */}
+      <form className="p-4 bg-white border-t" onSubmit={handleSendMessage}>
+        <div className="flex items-center">
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            placeholder="Type your message..."
+          />
+          <button
+            type="submit"
+            className="ml-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+          >
+            Send
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default GroupChatRoom;
+
 // import { useEffect, useState } from 'react';
 // import io from 'socket.io-client';
 

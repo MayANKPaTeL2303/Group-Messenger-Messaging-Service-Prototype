@@ -13,7 +13,7 @@ export default function Home() {
           <div className="bg-white rounded-lg shadow-lg">
             <header className="bg-blue-600 p-4 text-center text-white rounded-t-lg">
               <h1 className="text-3xl font-bold">
-                <i className="fas fa-smile"></i> ChatCord
+                <i className="fas fa-smile"></i> Group Chat
               </h1>
             </header>
 
@@ -21,7 +21,7 @@ export default function Home() {
               <form action="/grp-room" method="GET">
                 <div className="mb-4">
                   <label htmlFor="username" className="block text-gray-700 mb-2 font-semibold">
-                    Username
+                    Name(Entering the Chat)
                   </label>
                   <input
                     type="text"

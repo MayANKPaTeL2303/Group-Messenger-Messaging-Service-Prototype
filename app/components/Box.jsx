@@ -6,12 +6,6 @@ export default function Home() {
       <Head>
         <title>ChatCord App</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
-          integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
-          crossOrigin="anonymous"
-        />
       </Head>
 
       
@@ -48,13 +42,13 @@ export default function Home() {
                     name="room"
                     className="w-full p-3 text-black border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-150"
                   >
-                    <option value="JavaScript">JavaScript</option>
-                    <option value="Python">Python</option>
-                    <option value="PHP">PHP</option>
-                    <option value="C#">C#</option>
-                    <option value="Ruby">Ruby</option>
-                    <option value="Java">Java</option>
-                    <option value="Java">Java</option>
+                    <option value="JavaScript">The Loop</option>
+                    <option value="Python">Sync Space</option>
+                    <option value="PHP">The Buzz Room</option>
+                    <option value="C#">Fusion Room</option>
+                    <option value="Ruby">Vibe Tribe</option>
+                    <option value="Java">Talk Tavern</option>
+                    <option value="Java">Mind Meld Hub</option>
                   </select>
                 </div>
                 <button

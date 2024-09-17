@@ -1,3 +1,6 @@
+//!!!!!!!!!!!!!!    TRIED TO WRITE THE API BUT NOT ABLE TO COMPLETE ADD IT BECAUSE OF SOME PAYMENT WHERE NEEDED !!!!!!!!!!! 
+// SOME BUGS TO STILL RESOLVE!
+
 import OpenAI from "openai";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 

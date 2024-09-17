@@ -2,6 +2,7 @@
 import { useState,useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { signIn } from "next-auth/react";
 
 const SignIn = () => {
   const router = useRouter();
@@ -25,9 +26,19 @@ const SignIn = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post('api/login',formData)
-      console.log('Login successful', response.data);
-      router.push('/');
+      const response  = await signIn('credentials', {
+        redirect: false, // Prevent automatic redirection
+        identifier: formData.identifier,
+        password: formData.password,
+      });
+      if (response.error) {
+        // If there's an error, display it
+        setError(response.error || "Login failed!");
+      } else {
+        // If successful, redirect to the home page or dashboard
+        setSuccess("Login successful!");
+        router.push('/');
+      }
 
       if (!response.ok) {
         setError(data.message || "Login failed!");

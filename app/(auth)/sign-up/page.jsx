@@ -31,7 +31,8 @@ const SignUp = () => {
 },(formData));
 
 
-  const handleSubmit = async ()=>{
+  const handleSubmit = async (e)=>{
+    e.preventDefault();
     try{
       setLoading(true);
       const response = await axios.post('/api/sign-up',formData);

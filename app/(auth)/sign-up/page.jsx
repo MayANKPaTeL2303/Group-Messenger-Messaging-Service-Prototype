@@ -1,6 +1,5 @@
 'use client'
 import { useState, useEffect } from "react";
-import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios'
 
@@ -36,7 +35,7 @@ const SignUp = () => {
     try{
       setLoading(true);
       const response = await axios.post('/api/sign-up',formData);
-      console.log('signup okay', response.data);
+      console.log('SignUp Done', response.data);
       router.push('/login');
     }
     catch(error)
@@ -48,8 +47,7 @@ const SignUp = () => {
 		}
   };
 
- 
-
+  
   console.log(formData)
 
   return (

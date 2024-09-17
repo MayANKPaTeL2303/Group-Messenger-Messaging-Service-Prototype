@@ -1,23 +1,26 @@
-import mongoose from "mongoose";
-const { Schema } = mongoose;
+import mongoose from 'mongoose';
 
-// Define the Group schema(Group Details)
-const GroupSchema = new Schema({
-  grp_id: {
+const groupSchema = new mongoose.Schema({
+  groupname: {
     type: String,
     required: true,
-    unique: true   //Group id should be unique
-    
+    unique: true, // Ensures that each group name is unique
   },
-  grp_name: {
+  code: {
     type: String,
     required: true,
-    trim: true, // Removes extra whitespace
-    unique: true, // Username should be unique
-  }
+  },
+  members: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User', // Assuming you have a User model
+  }],
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User', // The user who created the group
+    required: true,
+  },
 });
 
-// Create or get the existing Message model
-const GroupModel = mongoose.models.Group || model('Group', GroupSchema);
+const Group = mongoose.models.Group || mongoose.model('Group', groupSchema);
 
-module.exports = GroupModel;  // Export the Message model for use in other parts of the application
+export default Group;

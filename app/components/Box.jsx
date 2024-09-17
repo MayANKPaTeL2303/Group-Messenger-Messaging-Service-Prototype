@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>ChatCord App</title>
+        <title>Group Chat</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 

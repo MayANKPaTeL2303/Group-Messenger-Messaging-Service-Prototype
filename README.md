@@ -13,7 +13,6 @@ This chat application allows users to join a group chat room and communicate in 
 
 - [Documentation](#usage)
 - [Installation](#installation)
-- [Contributing](#contributing)
 
 ## Documentation 
 

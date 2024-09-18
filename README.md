@@ -15,10 +15,8 @@ This chat application allows users to join a group chat room and communicate in 
 - [Installation](#installation)
 
 ## Documentation 
-
+[Documentation](https://github.com/MayANKPaTeL2303/Group-Messenger-Messaging-Service-Prototype/blob/main/System%20Design%20Documentation.pdf)
 ## Installation
-
-### Setup Instructions
 
 #### Clone the Repository
 To set up the project locally, clone the repository:

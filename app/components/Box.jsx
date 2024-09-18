@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const GroupActions = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center h-screen hover:scale-105 transform transition-transform duration-300 ease-in-out bg-gray-100">
       <div className="bg-white shadow-lg rounded-lg p-8 w-80">
         <h2 className="text-xl font-semibold mb-4 text-black text-center">Group Action</h2>
         <div className="flex flex-col space-y-4">

@@ -78,7 +78,7 @@ const GroupChat = () => {
         <input
         type="text"
           placeholder="Enter your username"
-          className="border border-gray-300 rounded-l px-4 py-2 w-1/4"
+          className="border border-gray-300 rounded-l text-gray-800 font-semibold px-4 py-2 w-1/4"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required

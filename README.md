@@ -11,19 +11,28 @@ This chat application allows users to join a group chat room and communicate in 
 
 ## Table of Contents
 
+- [Documentation](#usage)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
+
+## Documentation 
 
 ## Installation
 
-[Instructions on how to install and set up the project]
+### Setup Instructions
 
-## Usage
+#### Clone the Repository
+To set up the project locally, clone the repository:
 
-[Instructions on how to use the project]
+```bash
+git clone https://github.com/MayANKPaTeL2303/Group-Messenger-Messaging-Service-Prototype.git
+cd Group-Messenger-Messaging-Service-Prototype
+```
 
-## Contributing
+```bash
+npm install axios bcrypt bcryptjs cors http mongoose next next-auth nodemon react react-dom react-hook-form react-router-dom socket.io zod tailwindcss eslint autoprefixer
+```
 
-[Guidelines for contributing to the project]
+```bash
+npm run dev
+```
 

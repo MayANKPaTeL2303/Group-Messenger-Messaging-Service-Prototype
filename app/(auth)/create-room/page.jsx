@@ -82,7 +82,9 @@ const CreateGroupForm = ({ userId }) => {
       >
         Create Group
       </button>
+      <div className="text-blue-600">
       {loading ? 'Processing...' : 'Free Group Creation'}
+      </div>
     </form>
   );
 };

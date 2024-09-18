@@ -1,0 +1,65 @@
+// Root Directory
++-- app
+    +-- (auth)
+    |   +-- about
+        |   +-- page.jsx
+        +-- chat
+        |   +-- page.jsx
+        +-- create-room
+        |   +-- page.jsx
+        +-- join-room
+        |   +-- page.jsx
+        +-- login
+        |   +-- page.jsx
+        +-- sign-up
+        |   +-- page.jsx
+    +-- api
+        +-- auth
+        |   +-- [...nextauth]
+            |   +-- option.js
+            |   +-- route.js
+        +-- get-message
+        |   +-- route.js
+        +-- send-message
+        |   +-- route.js
+        +-- suggest-message
+        |   +-- route.js
+        +-- accept-message
+        |   +-- route.js
+        +-- sign-up 
+        |   +-- route.js
+        +-- group-join 
+        |   +-- route.js
+        +-- group-creation
+        |   +-- route.js 
+    +-- components
+    |   +-- Block.jsx
+    |   +-- Box.jsx
+    |   +-- Footer.jsx
+    |   +-- Navbar.jsx
+    +-- fonts
+    |   +-- GeistMonoVF.woff
+    |   +-- GeistVF.woff
+    +-- global.css
+    +-- layout.js 
+    +-- not-found.js 
+    +-- page.js
++-- context 
+|   +-- AuthProvider.js
++-- model
+|   +-- Group.js
+|   +-- Message.js
+|   +-- User.js
++-- node_modules(contains packages)
++-- utils
+    +-- dbConnect.js
++-- .env
++-- .eslintrc.json
++-- jsconfig.json
++-- middleware.js (To Handle the middlewares)
++-- next.config.mjs
++-- package-lock.json
++-- package.json
++-- server.js
++-- tailwind.config.js
++-- README.md

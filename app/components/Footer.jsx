@@ -29,6 +29,11 @@ const Footer = () => {
                   About Project 
                 </Link>
               </li>
+              <li>
+                <Link href="https://www.imbesideyou.com/" className="hover:underline me-4 md:me-6">
+                  Explore our Services
+                </Link>
+              </li>
             </ul>
           </div>
         </footer>

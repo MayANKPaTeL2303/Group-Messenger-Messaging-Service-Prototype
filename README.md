@@ -13,6 +13,7 @@ This chat application allows users to join a group chat room and communicate in 
 
 - [Documentation](#usage)
 - [Installation](#installation)
+- [Git-Shortlog(Give the detail of commits)](#work)
 
 ## Documentation 
 [System Design Documentation](https://github.com/MayANKPaTeL2303/Group-Messenger-Messaging-Service-Prototype/blob/main/System%20Design%20Documentation.pdf)
@@ -33,4 +34,5 @@ npm install axios bcrypt bcryptjs cors http mongoose next next-auth nodemon reac
 ```bash
 npm run dev
 ```
-
+## Git-Shortlog(Give the detail of commits)
+![Alt text](URL_or_path_to_image)

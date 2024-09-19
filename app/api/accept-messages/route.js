@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth"; //Get the session from the backend
+import { getServerSession } from "next-auth"; //Get the session forom the backend
 import { authOptions } from "../auth/[...nextauth]/option";
 import dbConnect from "@utils/dbConnect";
 import UserModel from "@model/User";

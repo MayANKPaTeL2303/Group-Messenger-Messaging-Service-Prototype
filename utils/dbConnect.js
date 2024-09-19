@@ -13,10 +13,10 @@ async function dbConnect() {
   }
 
   try {
-    // Attempt to connect to the database using the URI from environment variables
+    // Attempt to connect to the database
     const db = await mongoose.connect(process.env.MONGODB_URI || '', {});
 
-    // Store the connection status (1 means connected, 0 means disconnected)
+    // Store the connection status (1 - connected, 0 - disconnected)
     connection.isConnected = db.connections[0].readyState;
     console.log('Database connected successfully');
     

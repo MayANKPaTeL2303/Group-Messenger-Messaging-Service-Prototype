@@ -1,17 +1,16 @@
+//Login Page
 "use client";
-import { useState,useEffect } from "react";
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 const SignIn = () => {
   const router = useRouter();
-  
+
   const [formData, setFormData] = useState({ identifier: "", password: "" });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(null);
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,7 +24,7 @@ const SignIn = () => {
 
     try {
       setLoading(true);
-      const response  = await signIn('credentials', {
+      const response = await signIn("credentials", {
         redirect: false, // Prevent automatic redirection
         identifier: formData.identifier,
         password: formData.password,
@@ -36,17 +35,20 @@ const SignIn = () => {
       } else {
         // If successful, redirect to the home page or dashboard
         setSuccess("Login successful!");
-        router.push('/');
+        router.push("/");
       }
-
       if (!response.ok) {
         setError(data.message || "Login failed!");
-      } else{
-        setSuccess("Login Successfully")
+      } 
+      else {
+        setSuccess("Login Successfully");
       }
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       setError("Error logging in");
-    } finally {
+    } 
+    finally { //To set loading
       setLoading(false);
     }
   };
@@ -60,10 +62,14 @@ const SignIn = () => {
         </div>
 
         {error && <div className="text-red-500 mb-4">{error}</div>}
-        {success && <div className="text-green-600 text-center mb-4">{success}</div>}
+        {success && (
+          <div className="text-green-600 text-center mb-4">{success}</div>
+        )}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block mb-1 text-sm text-gray-700">Email/Username</label>
+            <label className="block mb-1 text-sm text-gray-700">
+              Email/Username
+            </label>
             <input
               type="text"
               name="identifier"
@@ -95,6 +101,6 @@ const SignIn = () => {
       </div>
     </div>
   );
-}
+};
 
 export default SignIn;

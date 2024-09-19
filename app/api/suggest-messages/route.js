@@ -1,4 +1,4 @@
-//!!!!!!!!!!!!!!    TRIED TO WRITE THE API BUT NOT ABLE TO COMPLETE ADD IT BECAUSE OF SOME PAYMENT WHERE NEEDED !!!!!!!!!!! 
+//!!!!!!!!!!!!!!    TRIED TO WRITE THE API BUT NOT ABLE TO ADD IT BECAUSE OF SOME PAYMENT WHERE NEEDED !!!!!!!!!!!
 // SOME BUGS TO STILL RESOLVE!
 
 import OpenAI from "openai";
@@ -24,10 +24,10 @@ export async function POST(req) {
       stream: true,
       prompt,
     });
-    
-    //Convert the response to the stream 
+
+    //Convert the response to the stream
     const stream = OpenAIStream(response);
-    
+
     //Response the stream
     return new StreamingTextResponse(stream);
   } catch (error) {

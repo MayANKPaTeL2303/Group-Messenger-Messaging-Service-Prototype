@@ -28,40 +28,35 @@ export async function GET(req) {
   const userId = new mongoose.Types.ObjectId(user._id);
   try {
     const user = await UserModel.aggregate([
-        {$match: {id: userId}},               //Match the userid
-        {$unwind: '$messages'},               //Unwind the message and make different data field
-        {$sort: {'messages.createdAt': -1}},   //Sort the messages
-        {$group: {_id: '$_id',messages: {$push: '$messages'}}}       //One group for each id has been created for each user have messages in the sorting order
-    ])
-    if(!user || user.length === 0)
-    {
-        return Response.json(
-            {
-              success: false,
-              message: "User not found",
-            },
-            { status: 401 }
-          );
-    }
-    else
-    {
-        return Response.json(
-            {
-              success: true,
-              message: user[0].messages,
-            },
-            { status: 200 }
-          );
+      { $match: { id: userId } }, //Match the userid
+      { $unwind: "$messages" }, //Unwind the message and make different data field
+      { $sort: { "messages.createdAt": -1 } }, //Sort the messages
+      { $group: { _id: "$_id", messages: { $push: "$messages" } } }, //One group for each id has been created for each user have messages in the sorting order
+    ]);
+    if (!user || user.length === 0) {
+      return Response.json(
+        {
+          success: false,
+          message: "User not found",
+        },
+        { status: 401 }
+      );
+    } else {
+      return Response.json(
+        {
+          success: true,
+          message: user[0].messages,
+        },
+        { status: 200 }
+      );
     }
   } catch (error) {
     return Response.json(
       {
         success: false,
-        message: "Internal Server error"
+        message: "Internal Server error",
       },
       { status: 500 }
     );
   }
-
-
 }

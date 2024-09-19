@@ -1,108 +1,125 @@
+//Testing
+//Group-Chat Room 
 "use client";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { useSession } from "next-auth/react";
-import axios from "axios";
-
-const socket = io("http://localhost:5000");
 
 const GroupChat = () => {
   const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState("");
-  const [username, setUsername] = useState("");
+  const [inputValue, setInputValue] = useState('');
+  const [username, setUsername] = useState('');
+  const [socket, setSocket] = useState(null);
 
   const { data: session } = useSession(); // Get session data
   const user = session?.user;
 
   useEffect(() => {
-    socket.on("receiveMessage", (data) => {
-      setMessages((prevMessages) => [...prevMessages, data]);
+    // Initialize socket connection
+    const socketInstance = io("http://localhost:8000");
+
+    socketInstance.on('connect', () => {
+      console.log("Connected to WebSocket Server");
     });
 
-    return () => {
-      socket.off("receiveMessage");
-    };
-  }, []);
+    socketInstance.on('disconnect', () => {
+      console.log('Disconnected from WebSocket server');
+    });
+
+    socketInstance.on('message', (message) => {
+      console.log('Received message:', message);
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    socketInstance.on('error', (error) => {
+      console.error('WebSocket error:', error);
+    });
+
+    setSocket(socketInstance);
+
+    // Cleanup on component unmount
+    // return () => {
+    //   socketInstance.disconnect();
+    //   console.log("Socket disconnected");
+    // };
+  })
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    try {
-      // const response = await axios.post("/api/send-message", message);
-      // console.log("Message Sended", response.data);
 
+    try {
       const senderUsername = user?.username || user?.email || username;
 
-      if (message && senderUsername) {
+      if (inputValue.trim() && senderUsername) {
         const messageData = {
           username: senderUsername,
-          message,
+          message: inputValue,
           time: new Date().toLocaleTimeString(),
         };
-        
 
-        socket.emit("sendMessage", messageData);
         setMessages((prevMessages) => [...prevMessages, messageData]);
-        setMessage("");
+        setInputValue('');
+
+        // Emit the message to the server
+        if (socket) {
+          socket.emit('message', messageData);
+          console.log("Message sent: ", messageData);
+        } else {
+          console.log("Socket is not connected");
+        }
       }
     } catch (error) {
       console.error("Error in sending message:", error);
     }
   };
-  
+
   return (
     <div className="flex flex-col h-screen">
-    <div className="flex-1 p-4 overflow-y-auto bg-gray-100">
-      <div className="flex flex-col space-y-4">
-        {messages.map((msg, index) => (
-          <div
-          key={index}
-            className="p-2 bg-slate-300 text-gray-800 rounded shadow"
-          >
-            <span className="text-blue-500 shadow p-2">
-              <strong>{msg.username}:</strong>
-            </span>{" "}
-            {msg.message}
-            <span className="text-gray-500 text-sm ml-10">{msg.time}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-    <form onSubmit={sendMessage} className="flex p-4 bg-white">
-      {session ? (
-        <div className="flex items-center justify-center p-4 bg-gray-100">
-          <div className="text-lg font-semibold text-gray-800">
-            {user?.username || user?.email}
-          </div>
+      <div className="flex-1 p-4 overflow-y-auto bg-gray-100">
+        <div className="flex flex-col space-y-4">
+          {messages.map((msg, index) => (
+            <div
+              key={index}
+              className="p-2 bg-slate-300 text-gray-800 rounded shadow"
+            >
+              <span className="text-blue-500 shadow p-2">
+                <strong>{msg.username}:</strong>
+              </span>{" "}
+              {msg.message}
+              <span className="text-gray-500 text-sm ml-10">{msg.time}</span>
+            </div>
+          ))}
         </div>
-      ) : (
-        <input
-        type="text"
-          placeholder="Enter your username"
-          className="border border-gray-300 rounded-l text-gray-800 font-semibold px-4 py-2 w-1/4"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
+      </div>
+      <form onSubmit={sendMessage} className="flex p-4 bg-white">
+        {!session && (
+          <input
+            type="text"
+            placeholder="Enter your username"
+            className="border border-gray-300 rounded-l text-gray-800 font-semibold px-4 py-2 w-1/4"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
           />
-      )}
+        )}
 
-      <input
-        type="text"
-        placeholder="Type a message..."
-        className="border text-black border-gray-300 rounded-l px-4 py-2 flex-grow"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        required
+        <input
+          type="text"
+          placeholder="Type a message..."
+          className="border text-black border-gray-300 rounded-l px-4 py-2 flex-grow"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          required
         />
-      <button
-        type="submit"
-        className="bg-blue-500 text-white rounded-r px-4 py-2"
+        <button
+          type="submit"
+          className="bg-blue-500 text-white rounded-r px-4 py-2"
         >
-        Send
-      </button>
-    </form>
-  </div>
-);
-
-
+          Send
+        </button>
+      </form>
+    </div>
+  );
 };
+
 export default GroupChat;

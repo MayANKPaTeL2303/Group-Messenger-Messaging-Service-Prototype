@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
-const { Schema } = mongoose;
 
 // Define the Message schema(Message Details)
-const MessageSchema = new Schema({
+const MessageSchema = new mongoose.Schema({
   content: {
     // Content of the message
     type: String,

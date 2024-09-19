@@ -63,3 +63,7 @@
 +-- server.js
 +-- tailwind.config.js
 +-- README.md
+
+
+
+We’ll then send the changes to the server, which will be broadcast to all other connected clients.This is a simple demonstration of real-time communication.

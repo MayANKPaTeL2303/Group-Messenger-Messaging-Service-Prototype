@@ -14,25 +14,26 @@ export const authOptions = {
       id: 'credentials',
       name: 'Credentials',
       credentials: {
-        identifier: { label: 'Email or Username', type: 'text' },
-        password: { label: 'Password', type: 'password' },
+        identifier: { label: 'Email or Username', type: 'text' }, //Input field for identifier
+        password: { label: 'Password', type: 'password' }, //Input field for password
       },
       async authorize(credentials) {
-        await dbConnect();
+        await dbConnect(); //Connect the database
 
         try {
           // Find the user by email or username
-          const user = await UserModel.findOne({
+          const user = await UserModel.findOne({        //Find the username or email of user
             $or: [
               { email: credentials.identifier },
               { username: credentials.identifier },
             ],
           });
-
+          //If no user is found, then error
           if (!user) {
             throw new Error('No user found with this email or username');
           }
-
+          
+          // Compare the input password with the hashed password in the database
           const isPasswordCorrect = await bcrypt.compare(
             credentials.password,
             user.password
@@ -40,7 +41,8 @@ export const authOptions = {
 
           if (isPasswordCorrect) {
             return user;
-          } else {
+          } 
+          else {      // If the password is incorrect, throw an error
             throw new Error('Incorrect password');
           }
         } catch (err) {
@@ -51,6 +53,7 @@ export const authOptions = {
     }),
   ],
   callbacks: {
+    //Modify the JWT(JSON Web token) to include more detail of user
     async jwt({ token, user }) {
       if (user) {
         token._id = user._id?.toString();
@@ -59,6 +62,7 @@ export const authOptions = {
       }
       return token;
     },
+    //Modify the session object to have te modified new token 
     async session({ session, token }) {
       if (token) {
         session.user._id = token._id;
@@ -69,11 +73,11 @@ export const authOptions = {
     },
   },
   session: {
-    strategy: 'jwt',
+    strategy: 'jwt',  //Use JWT for the session management
   },
-  secret: process.env.NEXTAUTH_SECRETKEY,
+  secret: process.env.NEXTAUTH_SECRETKEY, //Secret key for signing JWTs
   pages: {
-    signIn: '/login',
+    signIn: '/login', //Custom login page route
   },
 };
 

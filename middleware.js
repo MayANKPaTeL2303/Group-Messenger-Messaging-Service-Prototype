@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
-// Export the default NextAuth middleware
+//Export the default middleware from next/auth
 export { default } from 'next-auth/middleware';
 
 // Define the routes that this middleware will apply to
@@ -19,11 +19,6 @@ export async function middleware(request) {
   if (token && (url.pathname.startsWith('/login') || url.pathname.startsWith('/sign-up'))) {
     return NextResponse.redirect(new URL('/', request.url)); // Redirect to dashboard instead of home
   }
-
-  // If not authenticated and trying to access a protected route, redirect to login
-  // if (!token && url.pathname.startsWith('/')) { // Adjust the path to your protected routes
-  //   return NextResponse.redirect(new URL('/login', request.url));
-  // }
 
   // If none of the conditions match, proceed to the requested page
   return NextResponse.next();

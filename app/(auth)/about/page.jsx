@@ -1,3 +1,5 @@
+//About Page(Detail of the project)
+'use client'
 import React from 'react';
 
 const AboutPage = () => {

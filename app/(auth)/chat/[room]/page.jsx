@@ -1,4 +1,4 @@
-//Testing
+//Testing phase, some Optimisation and bugs can be resolve in the code 
 //Group-Chat Room 
 "use client";
 import { useEffect, useState } from "react";
@@ -15,41 +15,46 @@ const GroupChat = () => {
   const user = session?.user;
 
   useEffect(() => {
-    // Initialize socket connection
+    // Initialize socket connection when the component mount
     const socketInstance = io("http://localhost:8000");
-
+    
+    //Log connection status
     socketInstance.on('connect', () => {
       console.log("Connected to WebSocket Server");
     });
 
+    //Log Disconnection status
     socketInstance.on('disconnect', () => {
       console.log('Disconnected from WebSocket server');
     });
-
+    
+    //Listening for the incoming messages 
     socketInstance.on('message', (message) => {
       console.log('Received message:', message);
       setMessages((prevMessages) => [...prevMessages, message]);
     });
-
+    
+    //Any error in connection 
     socketInstance.on('error', (error) => {
       console.error('WebSocket error:', error);
     });
 
-    setSocket(socketInstance);
+    setSocket(socketInstance); // Set the socket instance in state
 
-    // Cleanup on component unmount
-    // return () => {
-    //   socketInstance.disconnect();
-    //   console.log("Socket disconnected");
-    // };
-  })
+    // Clean up the socket connection when the component unmounts
+    return () => {
+      socketInstance.disconnect();
+    };
+  }, []); // Empty dependency array to run once on mount
+  
 
   const sendMessage = async (e) => {
     e.preventDefault();
 
     try {
       const senderUsername = user?.username || user?.email || username;
-
+      
+      // Check if input is not empty and username is valid
       if (inputValue.trim() && senderUsername) {
         const messageData = {
           username: senderUsername,

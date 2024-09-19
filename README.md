@@ -35,4 +35,5 @@ npm install axios bcrypt bcryptjs cors http mongoose next next-auth nodemon reac
 npm run dev
 ```
 ## Git-Shortlog(Give the detail of commits)
-![Image](public/Screenshot 2024-09-19 173058.png)
+![Image](public/Screenshot%202024-09-19%20173058.png)
+

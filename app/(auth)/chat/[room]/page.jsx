@@ -4,12 +4,15 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { useSession } from "next-auth/react";
+import { useParams } from "next/navigation";
 
 const GroupChat = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [username, setUsername] = useState('');
   const [socket, setSocket] = useState(null);
+  const pathname = useParams();
+
 
   const { data: session } = useSession(); // Get session data
   const user = session?.user;
@@ -80,6 +83,7 @@ const GroupChat = () => {
 
   return (
     <div className="flex flex-col h-screen">
+      <h1 className="text-black p-2 text-center">ROOM: {pathname.room}</h1>
       <div className="flex-1 p-4 overflow-y-auto bg-gray-100">
         <div className="flex flex-col space-y-4">
           {messages.map((msg, index) => (

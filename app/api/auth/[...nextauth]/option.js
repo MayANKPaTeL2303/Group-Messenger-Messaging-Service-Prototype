@@ -18,11 +18,11 @@ export const authOptions = {
         password: { label: 'Password', type: 'password' }, //Input field for password
       },
       async authorize(credentials) {
-        await dbConnect(); //Connect the database
+      await dbConnect(); //Connect the database
 
         try {
           // Find the user by email or username
-          const user = await UserModel.findOne({        //Find the username or email of user
+          const user = await UserModel.findOne({   //Find the username or email of user
             $or: [
               { email: credentials.identifier },
               { username: credentials.identifier },

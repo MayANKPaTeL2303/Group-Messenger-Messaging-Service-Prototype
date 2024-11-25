@@ -2,7 +2,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import axios from "axios"; //axios to handle the page redirection 
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -14,12 +14,12 @@ const SignUp = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e)=>{
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
-  };
+  }
 
   useEffect(() => {
     formData.username.length > 0 &&
@@ -28,7 +28,7 @@ const SignUp = () => {
   }, formData);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); //To prevent the default behaviour of a form submission 
     try {
       setLoading(true);
       const response = await axios.post("/api/sign-up", formData);

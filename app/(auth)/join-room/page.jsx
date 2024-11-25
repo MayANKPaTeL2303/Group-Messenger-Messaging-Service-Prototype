@@ -25,7 +25,7 @@ const JoinRoom = () => {
       const response = await axios.post("/api/group-join", { code: joinCode });
       console.log(response);
       setSuccess("Join Successfully");
-      router.push(`/chat/${joinCode}`);
+      router.push(`/chat/${joinCode}?`);
     } catch (error) {
       console.error("Error joining the room:", error);
       setError("Error in joining");

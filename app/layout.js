@@ -18,10 +18,10 @@ export const metadata = {
   title: "Chat-Room",
   description: "Let Boom, the Room ",
 };
-
+// suppressHydrationWarning={true}: This prevents from showing hydration mismatch warnings when rendering the app on the client-side.
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html lang="en" suppressHydrationWarning={true}> 
       <AuthProvider>
         <body
           suppressHydrationWarning={true}

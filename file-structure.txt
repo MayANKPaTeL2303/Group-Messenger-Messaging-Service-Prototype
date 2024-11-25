@@ -15,9 +15,9 @@
         |   +-- page.jsx
     +-- api
         +-- auth
-        |   +-- [...nextauth]
-            |   +-- option.js
-            |   +-- route.js
+        |   +-- [...nextauth]      //Contain the authentication related logic 
+            |   +-- option.js      //Configure the nextauth authentication option, credential 
+            |   +-- route.js       //Define the API route for nextauth
         +-- get-message
         |   +-- route.js
         +-- send-message
@@ -50,7 +50,7 @@
 |   +-- Group.js
 |   +-- Message.js
 |   +-- User.js
-+-- node_modules(contains packages)
++-- node_modules(contains packages) //Contains the install packages from npm for your project 
 +-- utils
     +-- dbConnect.js
 +-- .env

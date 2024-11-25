@@ -2,7 +2,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn } from "next-auth/react"; //Inbuilt signIn option from next-auth 
 
 const SignIn = () => {
   const router = useRouter();
@@ -12,10 +12,12 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const handleChange = (e)=>{
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +34,8 @@ const SignIn = () => {
       if (response.error) {
         // If there's an error, display it
         setError(response.error || "Login failed!");
-      } else {
+      } 
+      else {
         // If successful, redirect to the home page or dashboard
         setSuccess("Login successful!");
         router.push("/");

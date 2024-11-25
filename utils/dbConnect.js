@@ -17,15 +17,14 @@ async function dbConnect() {
     const db = await mongoose.connect(process.env.MONGODB_URI || '', {});
 
     // Store the connection status (1 - connected, 0 - disconnected)
+    // console.log(db)
     connection.isConnected = db.connections[0].readyState;
     console.log('Database connected successfully');
     
   } catch (error) {
-    // If there's an error, log the error and gracefully exit the process
+    // If there's an error, exit the process
     console.error('Database connection failed:', error);
-    process.exit(1);  // Exit the application with a failure status
+    process.exit(1);  
   }
 }
-
-// Export the dbConnect function for use in other parts of the application
 module.exports = dbConnect;
